@@ -14,7 +14,7 @@ END
 $do$;
 
 -- Permisos base de conexión
-GRANT CONNECT ON DATABASE postgres TO app;
+GRANT CONNECT ON DATABASE library_db TO app;
 GRANT USAGE ON SCHEMA public TO app;
 
 -- REVOCAR permisos automáticos
