@@ -1,0 +1,29 @@
+services:
+  db:
+    image: postgres:16
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: ejemplo
+      POSTGRES_PASSWORD: ejemplo123
+      POSTGRES_DB: bda
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ejemplo -d bda" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: ./next
+    container_name: nextjs_reports_app
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgres://app_client:contra123@db:5432/bda
+      NODE_ENV: production
+    depends_on:
+      db:
+        condition: service_healthy
