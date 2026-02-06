@@ -3,31 +3,31 @@ import Link from 'next/link';
 export default function Home() {
   const reports = [
     {
-      id: 1,
+      slug: 'most-borrowed',
       title: 'Top Libros Prestados',
       description: 'Ranking de los libros más solicitados por los socios.',
       color: 'bg-blue-500',
     },
     {
-      id: 2,
+      slug: 'overdue-loans',
       title: 'Préstamos Vencidos',
       description: 'Listado de préstamos activos con fecha de entrega expirada.',
       color: 'bg-red-500',
     },
     {
-      id: 3,
+      slug: 'fines-summary',
       title: 'Resumen Financiero',
       description: 'Estado mensual de multas recolectadas y pendientes.',
       color: 'bg-green-500',
     },
     {
-      id: 4,
+      slug: 'member-activity',
       title: 'Actividad de Socios',
       description: 'Análisis de comportamiento de préstamos y morosidad.',
       color: 'bg-purple-500',
     },
     {
-      id: 5,
+      slug: 'inventory-health',
       title: 'Salud de Inventario',
       description: 'Evaluación de disponibilidad de copias por categoría.',
       color: 'bg-orange-500',
@@ -47,8 +47,8 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {reports.map((report) => (
             <Link
-              href={`/reports/${report.id}`}
-              key={report.id}
+              href={`/reports/${report.slug}`}
+              key={report.slug}
               className="block group h-full"
             >
               <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 overflow-hidden h-full flex flex-col">

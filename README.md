@@ -1,43 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Evaluación Práctica - Dashboard de Biblioteca
 
-## Getting Started
+Sistema de reportes SQL con Next.js y PostgreSQL utilizando Docker Compose.
 
-First, run the development server:
+## Características
+
+- 5 reportes dinámicos con vistas SQL optimizadas
+- Arquitectura segura con usuario de aplicación con permisos limitados
+- Índices para optimización de consultas
+- Interfaz responsiva con Tailwind CSS
+- Despliegue automatizado con Docker
+
+## Requisitos
+
+- Docker y Docker Compose instalados
+- Node.js 20+ (solo para desarrollo local)
+
+## Configuración
+
+1. Clonar el repositorio
+2. Crear archivo `.env` basado en `.env.example`:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Levantar los servicios:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+docker compose up --build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Acceder a la aplicación en `http://localhost:3000`
 
-## Learn More
+## Estructura del Proyecto
 
-To learn more about Next.js, take a look at the following resources:
+```
+.
+├── db/
+│   ├── 01_schema.sql      # Esquema de base de datos
+│   ├── 02_seed.sql        # Datos de prueba
+│   ├── 03_reports_vw.sql  # Vistas de reportes
+│   ├── 04_indexes.sql     # Índices de optimización
+│   └── 05_roles.sql       # Configuración de seguridad
+├── src/
+│   ├── app/               # Páginas Next.js
+│   └── lib/
+│       └── db.ts          # Conexión a PostgreSQL
+└── docker-compose.yml
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Reportes Disponibles
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Top Libros Prestados**: Ranking con Window Functions
+2. **Préstamos Vencidos**: CTE con cálculo de multas
+3. **Resumen Financiero**: Agregación mensual con HAVING
+4. **Actividad de Socios**: Análisis de comportamiento
+5. **Salud de Inventario**: Estado por categoría
 
-## Deploy on Vercel
+## Optimización de Base de Datos
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Índices Implementados
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-## Database Optimization
-
-### Indices Implementados
 1. **`idx_loans_overdue_filter`**: Optimiza la identificación de préstamos no devueltos y vencidos.
 2. **`idx_copies_book_id`**: Acelera los JOINs entre libros y sus copias físicas.
 3. **`idx_loans_member_id`**: Mejora el rendimiento de reportes por usuario.
@@ -45,6 +68,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ### Evidencia con EXPLAIN
 
 #### Consulta 1: Buscar préstamos vencidos
+
 **Antes (Sin Índice):**
 ```sql
 EXPLAIN SELECT * FROM loans WHERE return_date IS NULL AND due_date < NOW();
@@ -59,6 +83,7 @@ EXPLAIN SELECT * FROM loans WHERE return_date IS NULL AND due_date < NOW();
 ```
 
 #### Consulta 2: Contar copias por libro
+
 **Antes (Sin Índice):**
 ```sql
 EXPLAIN SELECT count(*) FROM copies WHERE book_id = 12;
@@ -71,48 +96,39 @@ EXPLAIN SELECT count(*) FROM copies WHERE book_id = 12;
 -- Result: Index Only Scan using idx_copies_book_id on copies  (cost=0.15..8.20 rows=10 width=4)
 ```
 
-## Security Verification
+## Seguridad
 
-Se ha configurado un rol `app` con permisos minimizados (**Principio de Menor Privilegio**).
+### Verificación de Permisos
+
+Se ha configurado un rol `app` con permisos minimizados (Principio de Menor Privilegio).
 
 **Cómo verificar:**
+
 1. Conectarse como usuario `app`:
-   ```bash
-   psql -U app -d postgres -h localhost
-   ```
-
-2. **Prueba de Éxito** (Consultar vista autorizada):
-   ```sql
-   SELECT * FROM vw_most_borrowed_books LIMIT 5;
-   -- Debería retornar resultados exitosamente.
-   ```
-
-3. **Prueba de Fallo** (Intentar leer tabla protegida):
-   ```sql
-   SELECT * FROM members;
-   -- ERROR:  permission denied for table members
-   ```
-
-## Docker Deployment
-
-La aplicación está contenerizada para facilitar su despliegue y pruebas.
-
-### Requisitos
-- Docker y Docker Compose instalados.
-- Archivo `.env` configurado (ver `.env.example` o usar los valores por defecto).
-
-### Ejecución
-Para levantar la base de datos y la aplicación:
-
 ```bash
-docker compose up --build
+docker exec -it library_db psql -U app -d postgres
 ```
 
-Esto iniciará:
-- **Base de Datos**: PostgreSQL 16 en puerto configurado en `.env` (default 5432).
-- **Frontend**: Next.js en `http://localhost:3000`.
+2. **Prueba de Éxito** (Consultar vista autorizada):
+```sql
+SELECT * FROM vw_most_borrowed_books LIMIT 5;
+-- Debería retornar resultados exitosamente
+```
 
-**Nota**: El contenedor de BD ejecutar automáticamente los scripts de `db/` al iniciarse por primera vez.
+3. **Prueba de Fallo** (Intentar leer tabla protegida):
+```sql
+SELECT * FROM members;
+-- ERROR: permission denied for table members
+```
 
+## Tecnologías
 
+- Next.js 16 (App Router)
+- PostgreSQL 16
+- TypeScript
+- Tailwind CSS
+- Docker
 
+## Licencia
+
+MIT
