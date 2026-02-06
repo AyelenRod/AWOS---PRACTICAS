@@ -1,29 +1,29 @@
--- db/roles.sql
+-- db/05_roles.sql
 
--- Creacion de un rol de grupo
+-- Crear rol 'app' si no existe
 DO
 $do$
 BEGIN
    IF NOT EXISTS (
       SELECT FROM pg_catalog.pg_roles  
-      WHERE  rolname = 'app_client') THEN
+      WHERE  rolname = 'app') THEN
 
-      CREATE ROLE app_client WITH LOGIN PASSWORD 'contra123';
+      CREATE ROLE app WITH LOGIN PASSWORD 'secure_password_123';
    END IF;
 END
 $do$;
 
--- Permisos mínimos
-GRANT CONNECT ON DATABASE postgres TO app_client;
+-- Permisos base de conexión
+GRANT CONNECT ON DATABASE postgres TO app;
+GRANT USAGE ON SCHEMA public TO app;
 
-GRANT USAGE ON SCHEMA public TO app_client;
+-- REVOCAR permisos automáticos
+REVOKE ALL ON ALL TABLES IN SCHEMA public FROM app;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public REVOKE ALL ON TABLES FROM app;
 
---SELECT solo a las vistas específicas
-GRANT SELECT ON view_category_sales TO app_client;
-GRANT SELECT ON view_inventory_status TO app_client;
-GRANT SELECT ON view_vip_customers TO app_client;
-GRANT SELECT ON view_monthly_sales TO app_client;
-GRANT SELECT ON view_product_ranking TO app_client;
-
--- Futuras tablas no accesibles automáticamente
-ALTER DEFAULT PRIVILEGES IN SCHEMA public REVOKE ALL ON TABLES FROM app_client;
+-- OTORGAR SELECT EXLUSIVAMENTE SOBRE LAS VISTAS
+GRANT SELECT ON vw_most_borrowed_books TO app;
+GRANT SELECT ON vw_overdue_loans TO app;
+GRANT SELECT ON vw_fines_summary TO app;
+GRANT SELECT ON vw_member_activity TO app;
+GRANT SELECT ON vw_inventory_health TO app;
