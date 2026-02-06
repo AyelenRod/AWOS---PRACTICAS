@@ -8,7 +8,7 @@ BEGIN
       SELECT FROM pg_catalog.pg_roles  
       WHERE  rolname = 'app') THEN
 
-      CREATE ROLE app WITH LOGIN PASSWORD 'secure_password_123';
+      CREATE ROLE app WITH LOGIN PASSWORD 'contra123';
    END IF;
 END
 $do$;
