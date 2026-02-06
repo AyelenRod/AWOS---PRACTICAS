@@ -1,28 +1,32 @@
 services:
   db:
-    image: postgres:16
-    container_name: postgres_db
+    image: postgres:16-alpine
+    container_name: library_db
     environment:
-      POSTGRES_USER: ejemplo
-      POSTGRES_PASSWORD: ejemplo123
-      POSTGRES_DB: bda
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
-      - "5433:5432"
+      - "${DB_PORT}:5432"
     volumes:
       - ./db:/docker-entrypoint-initdb.d
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U ejemplo -d bda" ]
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
       interval: 5s
       timeout: 5s
       retries: 5
 
   app:
-    build: ./next
-    container_name: nextjs_reports_app
+    build: .
+    container_name: library_app
     ports:
       - "3000:3000"
     environment:
-      DATABASE_URL: postgres://app_client:contra123@db:5432/bda
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
       NODE_ENV: production
     depends_on:
       db:

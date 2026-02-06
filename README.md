@@ -93,4 +93,26 @@ Se ha configurado un rol `app` con permisos minimizados (**Principio de Menor Pr
    -- ERROR:  permission denied for table members
    ```
 
+## Docker Deployment
+
+La aplicación está contenerizada para facilitar su despliegue y pruebas.
+
+### Requisitos
+- Docker y Docker Compose instalados.
+- Archivo `.env` configurado (ver `.env.example` o usar los valores por defecto).
+
+### Ejecución
+Para levantar la base de datos y la aplicación:
+
+```bash
+docker compose up --build
+```
+
+Esto iniciará:
+- **Base de Datos**: PostgreSQL 16 en puerto configurado en `.env` (default 5432).
+- **Frontend**: Next.js en `http://localhost:3000`.
+
+**Nota**: El contenedor de BD ejecutar automáticamente los scripts de `db/` al iniciarse por primera vez.
+
+
 
