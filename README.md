@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Library SQL Reporting Dashboard
 
-## Getting Started
+A Next.js application visualizing PostgreSQL Views with strict security and Docker Compose support.
 
-First, run the development server:
+## Prerequisites
+- Docker & Docker Compose
 
+## Quick Start
+1. Create a `.env` file in the root directory:
+   ```env
+   # Database Superuser (for initialization)
+   POSTGRES_USER=postgres
+   POSTGRES_PASSWORD=password
+   POSTGRES_DB=library
+
+   # Application User (Restricted Access)
+   APP_USER=user
+   APP_PASSWORD=con123456
+   ```
+2. Run the application:
+   ```bash
+   docker compose up --build
+   ```
+3. Open [http://localhost:3000](http://localhost:3000)
+
+## Architecture
+
+### Database
+- **Tables**: `members`, `books`, `copies`, `loans`, `fines`
+- **Views**:
+  - `vw_most_borrowed_books`: Top books by loan count (Window Function).
+  - `vw_overdue_loans`: Active overdue loans with penalties (CTE + CASE).
+  - `vw_fines_summary`: Monthly breakdown of paid vs pending fines.
+  - `vw_member_activity`: Member stats and return reliability.
+  - `vw_inventory_health`: Categorized inventory status.
+
+### Security
+The application connects as `user` (password: `con123456`), NOT `postgres`.
+This user has **SELECT-only access to VIEWS**. It cannot query tables directly.
+
+**Verify Security:**
+1. Connect to the database container:
+   ```bash
+   docker exec -it library_db psql -U user -d library
+   ```
+2. Try to query a table (Should FAIL):
+   ```sql
+   SELECT * FROM members;
+   -- ERROR: permission denied for table members
+   ```
+3. Try to query a view (Should SUCCEED):
+   ```sql
+   SELECT * FROM vw_most_borrowed_books;
+   ```
+
+### Performance (Indexes)
+Indices have been created on Foreign Keys and filtered columns.
+
+**Verify Indexes:**
+Run these inside the postgres container (as `postgres` user for full output, or `user` if allowed).
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+docker exec -it library_db psql -U postgres -d library
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Query 1 (Overdue Loans):
+```sql
+EXPLAIN ANALYZE SELECT * FROM loans WHERE due_at < CURRENT_DATE;
+```
+*Expected*: Usage of `idx_loans_due_at`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Query 2 (Book Search):
+```sql
+EXPLAIN ANALYZE SELECT * FROM books WHERE title = 'The Great Gatsby';
+```
+*Expected*: Usage of `idx_books_title`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Project Structure
+- `db/`: SQL init scripts (Schema, Seed, Views, Roles).
+- `src/app/`: Next.js App Router pages.
+- `src/lib/db.ts`: Database connection (using `pg`).
+- `docker-compose.yml`: Stack definition.
