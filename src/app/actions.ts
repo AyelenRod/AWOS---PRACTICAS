@@ -14,6 +14,8 @@ interface BookRow {
     book_id: number;
     title: string;
     author: string;
+    isbn: string;
+    category: string;
     total_loans: string;
     rank_most_borrowed: string;
     count?: string;
@@ -42,18 +44,23 @@ export async function getMostBorrowedBooks(page = 1, searchQuery = '') {
         query(totalSql, [safeSearch])
     ]);
 
+    const totalRecords = Number(totalRes.rows[0].count);
+    const totalPages = Math.ceil(totalRecords / limit);
+
     return {
         data: data.rows as BookRow[],
-        totalPages: Math.ceil(Number(totalRes.rows[0].count) / limit),
+        totalPages,
+        totalRecords,
         page
     };
 }
 
 interface LoanRow {
     loan_id: number;
-    due_at: string;
-    loaned_at: string;
+    loan_date: string;
+    return_date: string;
     member_name: string;
+    member_email: string;
     book_title: string;
     days_overdue: number;
     estimated_fine_amount: string;
@@ -81,56 +88,99 @@ export async function getOverdueLoans(page = 1, minDays = 0) {
         query(totalSql, [minDays])
     ]);
 
+    const totalRecords = Number(totalRes.rows[0].count);
+    const totalPages = Math.ceil(totalRecords / limit);
+
     return {
         data: data.rows as LoanRow[],
-        totalPages: Math.ceil(Number(totalRes.rows[0].count) / limit),
+        totalPages,
+        totalRecords,
         page
     };
 }
 
 interface FineRow {
-    month_str: string;
-    total_fines_count: string;
-    total_amount_generated: string;
-    total_paid: string;
+    member_id: number;
+    member_name: string;
+    member_email: string;
     total_pending: string;
+    total_paid: string;
 }
 
-export async function getFinesSummary(startDate?: string, endDate?: string) {
-    let sql = 'SELECT * FROM vw_fines_summary';
-    const params: unknown[] = [];
+export async function getFinesSummary(page = 1) {
+    const limit = 10;
+    const offset = (page - 1) * limit;
 
-    if (startDate && endDate) {
-        sql += ' WHERE month_str >= $1 AND month_str <= $2';
-        params.push(startDate, endDate);
-    }
+    const sql = `
+    SELECT * FROM vw_fines_summary
+    ORDER BY total_pending DESC
+    LIMIT $1 OFFSET $2
+  `;
 
-    sql += ' ORDER BY month_str DESC';
+    const totalSql = `
+    SELECT COUNT(*) as count FROM vw_fines_summary
+  `;
 
-    const res = await query(sql, params);
-    return res.rows as FineRow[];
+    const [data, totalRes] = await Promise.all([
+        query(sql, [limit, offset]),
+        query(totalSql)
+    ]);
+
+    const totalRecords = Number(totalRes.rows[0].count);
+    const totalPages = Math.ceil(totalRecords / limit);
+
+    return {
+        data: data.rows as FineRow[],
+        totalPages,
+        totalRecords,
+        page
+    };
 }
 
 interface MemberRow {
     member_id: number;
     name: string;
-    member_type: string;
+    email: string;
     total_loans: string;
-    active_overdue_count: string;
-    on_time_return_rate: string;
+    active_loans: string;
+    completed_loans: string;
 }
 
-export async function getMemberActivity() {
-    const sql = 'SELECT * FROM vw_member_activity ORDER BY on_time_return_rate ASC LIMIT 50';
-    const res = await query(sql);
-    return res.rows as MemberRow[];
+export async function getMemberActivity(page = 1) {
+    const limit = 10;
+    const offset = (page - 1) * limit;
+
+    const sql = `
+    SELECT * FROM vw_member_activity 
+    ORDER BY total_loans DESC 
+    LIMIT $1 OFFSET $2
+  `;
+
+    const totalSql = `
+    SELECT COUNT(*) as count FROM vw_member_activity
+  `;
+
+    const [data, totalRes] = await Promise.all([
+        query(sql, [limit, offset]),
+        query(totalSql)
+    ]);
+
+    const totalRecords = Number(totalRes.rows[0].count);
+    const totalPages = Math.ceil(totalRecords / limit);
+
+    return {
+        data: data.rows as MemberRow[],
+        totalPages,
+        totalRecords,
+        page
+    };
 }
 
 interface InventoryRow {
     category: string;
     total_copies: string;
     count_available: string;
-    count_loaned: string;
+    count_borrowed: string;
     count_lost: string;
     availability_percentage: string;
 }

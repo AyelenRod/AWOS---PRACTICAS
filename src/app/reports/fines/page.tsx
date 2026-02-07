@@ -1,19 +1,24 @@
 import { getFinesSummary } from "@/app/actions";
 import { DollarSign, TrendingDown, TrendingUp, Users, AlertCircle } from 'lucide-react';
+import Pagination from "@/components/Pagination";
 
 export const dynamic = 'force-dynamic';
 
-export default async function FinesPage() {
-  const fines = await getFinesSummary();
+interface PageProps {
+  searchParams: { page?: string };
+}
 
-  const totalPending = fines.reduce((acc, curr) => acc + Number(curr.total_pending), 0);
-  const totalPaid = fines.reduce((acc, curr) => acc + Number(curr.total_paid), 0);
+export default async function FinesPage({ searchParams }: PageProps) {
+  const currentPage = Number(searchParams.page) || 1;
+  const result = await getFinesSummary(currentPage);
+
+  const totalPending = result.data.reduce((acc, curr) => acc + Number(curr.total_pending), 0);
+  const totalPaid = result.data.reduce((acc, curr) => acc + Number(curr.total_paid), 0);
   const totalFines = totalPending + totalPaid;
   const collectionRate = totalFines > 0 ? (totalPaid / totalFines) * 100 : 0;
 
   return (
     <div className="space-y-8 animate-fade-in">
-      {/* Header Section */}
       <div className="bg-gradient-to-br from-emerald-600 via-emerald-500 to-teal-500 rounded-3xl shadow-2xl p-10 text-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-teal-300 rounded-full blur-3xl opacity-20 -translate-y-1/2 translate-x-1/2"></div>
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-emerald-700 rounded-full blur-3xl opacity-20 translate-y-1/2 -translate-x-1/2"></div>
@@ -62,7 +67,6 @@ export default async function FinesPage() {
         </div>
       </div>
 
-      {/* Summary Cards */}
       <div className="grid grid-cols-3 gap-6">
         <div className="bg-white rounded-2xl p-6 border-l-4 border-emerald-500 shadow-lg">
           <div className="flex items-center justify-between mb-4">
@@ -105,13 +109,12 @@ export default async function FinesPage() {
             </div>
             <span className="text-xs font-bold text-[#2E5AA7] bg-[#2E5AA7]/10 px-3 py-1 rounded-full">SOCIOS</span>
           </div>
-          <div className="text-3xl font-bold text-slate-900 mb-1">{fines.length}</div>
+          <div className="text-3xl font-bold text-slate-900 mb-1">{result.totalRecords}</div>
           <div className="text-sm text-slate-500">Con multas registradas</div>
           <div className="mt-4 text-xs text-slate-400">Total acumulado histórico</div>
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="bg-white rounded-3xl shadow-xl border border-slate-200/50 overflow-hidden">
         <div className="p-8 border-b border-slate-200/50 bg-gradient-to-r from-emerald-50 to-teal-50">
           <h2 className="text-2xl font-bold text-slate-900">Detalle por Socio</h2>
@@ -132,7 +135,7 @@ export default async function FinesPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
-              {fines.map((fine) => {
+              {result.data.map((fine) => {
                 const total = Number(fine.total_pending) + Number(fine.total_paid);
                 const pending = Number(fine.total_pending);
                 const paid = Number(fine.total_paid);
@@ -192,9 +195,12 @@ export default async function FinesPage() {
             </tbody>
           </table>
         </div>
+
+        <div className="p-8 border-t border-slate-200/50 bg-gradient-to-r from-slate-50 to-white">
+          <Pagination currentPage={currentPage} totalPages={result.totalPages} />
+        </div>
       </div>
 
-      {/* Info Footer */}
       <div className="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl p-6 border border-emerald-200">
         <div className="flex items-start gap-4">
           <div className="p-3 bg-emerald-500 rounded-xl">
@@ -203,9 +209,9 @@ export default async function FinesPage() {
           <div className="flex-1">
             <h3 className="font-bold text-slate-900 mb-2">Sobre este Reporte</h3>
             <p className="text-sm text-slate-600 leading-relaxed">
-              Este reporte consulta la vista <code className="px-2 py-1 bg-white rounded font-mono text-xs text-emerald-600 border border-emerald-200">vw_fines_summary</code> que 
-              agrupa todas las multas por socio y calcula: SUM(amount) AS total_fines, SUM(IF(status='paid', amount, 0)) AS total_paid, 
-              y SUM(IF(status='pending', amount, 0)) AS total_pending. Incluye información del socio mediante JOIN con la tabla members.
+                Este reporte consulta la vista <code className="px-2 py-1 bg-white rounded font-mono text-xs text-emerald-600 border border-emerald-200">vw_fines_summary</code> que 
+                agrupa todas las multas por socio y calcula: SUM(amount) AS total_fines, SUM(IF(status=&apos;paid&apos;, amount, 0)) AS total_paid, 
+                y SUM(IF(status=&apos;pending&apos;, amount, 0)) AS total_pending. Incluye información del socio mediante JOIN con la tabla members.
             </p>
           </div>
         </div>

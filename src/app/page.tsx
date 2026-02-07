@@ -5,14 +5,14 @@ import { ArrowRight, TrendingUp, AlertTriangle, DollarSign, BookOpen, Users, Pac
 export const dynamic = 'force-dynamic';
 
 export default async function Dashboard() {
-  const [fines, overdue, popular, inventory] = await Promise.all([
-    getFinesSummary(),
+  const [finesResult, overdue, popular, inventory] = await Promise.all([
+    getFinesSummary(1),
     getOverdueLoans(1),
     getMostBorrowedBooks(1),
     getInventoryHealth()
   ]);
 
-  const totalFinesPending = fines.reduce((acc: number, curr) => acc + Number(curr.total_pending), 0);
+  const totalFinesPending = finesResult.data.reduce((acc: number, curr) => acc + Number(curr.total_pending), 0);
   const totalOverdue = overdue.data.length;
   const topBook = popular.data[0]?.title || 'N/A';
   const totalBooks = inventory.reduce((acc, cat) => acc + Number(cat.total_copies), 0);

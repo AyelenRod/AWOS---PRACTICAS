@@ -14,7 +14,6 @@ export default async function MostBorrowedPage({ searchParams }: PageProps) {
 
   return (
     <div className="space-y-8 animate-fade-in">
-      {/* Header Section */}
       <div className="bg-gradient-to-br from-[#2E5AA7] via-[#2E5AA7] to-[#1e3a5f] rounded-3xl shadow-2xl p-10 text-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-[#86C5FF] rounded-full blur-3xl opacity-20 -translate-y-1/2 translate-x-1/2"></div>
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#FFA62B] rounded-full blur-3xl opacity-10 translate-y-1/2 -translate-x-1/2"></div>
@@ -56,7 +55,6 @@ export default async function MostBorrowedPage({ searchParams }: PageProps) {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="bg-white rounded-3xl shadow-xl border border-slate-200/50 overflow-hidden">
         <div className="p-8 border-b border-slate-200/50 bg-gradient-to-r from-slate-50 to-white">
           <h2 className="text-2xl font-bold text-slate-900">Tabla de Resultados</h2>
@@ -131,7 +129,6 @@ export default async function MostBorrowedPage({ searchParams }: PageProps) {
         </div>
       </div>
 
-      {/* Info Footer */}
       <div className="bg-gradient-to-r from-[#2E5AA7]/10 to-[#86C5FF]/10 rounded-2xl p-6 border border-[#2E5AA7]/20">
         <div className="flex items-start gap-4">
           <div className="p-3 bg-[#2E5AA7] rounded-xl">
