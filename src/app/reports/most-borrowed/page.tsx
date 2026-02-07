@@ -18,20 +18,20 @@ export default async function MostBorrowedPage({
     return (
         <div>
             <ReportHeader
-                title="Most Borrowed Books"
-                description="Ranking of popular titles based on loan frequency."
+                title="Libros Más Prestados"
+                description="Ranking de títulos populares basado en frecuencia de préstamos."
             />
 
-            <SearchFilter placeholder="Search by title or author..." />
+            <SearchFilter placeholder="Buscar por título o autor..." />
 
-            <div className="rounded-md border border-slate-200 bg-white overflow-hidden shadow-sm">
+            <div className="rounded border border-slate-200 bg-white overflow-hidden">
                 <table className="w-full text-sm text-left">
                     <thead className="bg-slate-50 text-slate-500 font-medium border-b border-slate-200">
                         <tr>
-                            <th className="px-4 py-3 w-16 text-center">Rank</th>
-                            <th className="px-4 py-3">Title</th>
-                            <th className="px-4 py-3">Author</th>
-                            <th className="px-4 py-3 text-right">Total Loans</th>
+                            <th className="px-4 py-3 w-16 text-center">Rango</th>
+                            <th className="px-4 py-3">Título</th>
+                            <th className="px-4 py-3">Autor</th>
+                            <th className="px-4 py-3 text-right">Total Préstamos</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100">
@@ -52,7 +52,7 @@ export default async function MostBorrowedPage({
                         {data.length === 0 && (
                             <tr>
                                 <td colSpan={4} className="px-4 py-8 text-center text-slate-500">
-                                    No books found.
+                                    No se encontraron libros.
                                 </td>
                             </tr>
                         )}

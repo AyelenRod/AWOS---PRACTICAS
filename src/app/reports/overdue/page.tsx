@@ -18,26 +18,26 @@ export default async function OverduePage({
     return (
         <div>
             <ReportHeader
-                title="Overdue Loans"
-                description="Active loans that have passed their due date."
+                title="Préstamos Vencidos"
+                description="Préstamos activos que han pasado su fecha de devolución."
             />
 
             <div className="flex gap-2 mb-4">
-                <Link replace href="?days=0" className={`px-3 py-1 rounded-full text-xs font-medium border ${minDays === 0 ? 'bg-slate-800 text-white' : 'bg-white text-slate-600'}`}>All</Link>
-                <Link replace href="?days=7" className={`px-3 py-1 rounded-full text-xs font-medium border ${minDays === 7 ? 'bg-slate-800 text-white' : 'bg-white text-slate-600'}`}>&gt; 7 Days</Link>
-                <Link replace href="?days=30" className={`px-3 py-1 rounded-full text-xs font-medium border ${minDays === 30 ? 'bg-slate-800 text-white' : 'bg-white text-slate-600'}`}>Critical (&gt; 30 Days)</Link>
+                <Link replace href="?days=0" className={`px-3 py-1 rounded-full text-xs font-medium border ${minDays === 0 ? 'bg-slate-800 text-white' : 'bg-white text-slate-600'}`}>Todos</Link>
+                <Link replace href="?days=7" className={`px-3 py-1 rounded-full text-xs font-medium border ${minDays === 7 ? 'bg-slate-800 text-white' : 'bg-white text-slate-600'}`}>&gt; 7 Días</Link>
+                <Link replace href="?days=30" className={`px-3 py-1 rounded-full text-xs font-medium border ${minDays === 30 ? 'bg-slate-800 text-white' : 'bg-white text-slate-600'}`}>Crítico (&gt; 30 Días)</Link>
             </div>
 
-            <div className="rounded-md border border-slate-200 bg-white overflow-hidden shadow-sm">
+            <div className="rounded border border-slate-200 bg-white overflow-hidden">
                 <table className="w-full text-sm text-left">
                     <thead className="bg-slate-50 text-slate-500 font-medium border-b border-slate-200">
                         <tr>
-                            <th className="px-4 py-3">Member</th>
-                            <th className="px-4 py-3">Book</th>
-                            <th className="px-4 py-3">Due Date</th>
-                            <th className="px-4 py-3 text-center">Days Overdue</th>
-                            <th className="px-4 py-3 text-center">Urgency</th>
-                            <th className="px-4 py-3 text-right">Est. Fine</th>
+                            <th className="px-4 py-3">Socio</th>
+                            <th className="px-4 py-3">Libro</th>
+                            <th className="px-4 py-3">Fecha Vencimiento</th>
+                            <th className="px-4 py-3 text-center">Días Atraso</th>
+                            <th className="px-4 py-3 text-center">Urgencia</th>
+                            <th className="px-4 py-3 text-right">Multa Est.</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100">
@@ -67,7 +67,7 @@ export default async function OverduePage({
                         {data.length === 0 && (
                             <tr>
                                 <td colSpan={6} className="px-4 py-8 text-center text-slate-500">
-                                    No overdue loans found matching criteria.
+                                    No se encontraron préstamos vencidos con este criterio.
                                 </td>
                             </tr>
                         )}

@@ -12,7 +12,7 @@ export function ReportHeader({ title, description }: { title: string, descriptio
     );
 }
 
-export function SearchFilter({ placeholder = 'Search...' }: { placeholder?: string }) {
+export function SearchFilter({ placeholder = 'Buscar...' }: { placeholder?: string }) {
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const { replace } = useRouter();
@@ -57,7 +57,7 @@ export function PaginationControls({ totalPages, currentPage }: { totalPages: nu
     return (
         <div className="flex items-center gap-2 mt-6 justify-end">
             <span className="text-sm text-slate-500 mr-2">
-                Page {currentPage} of {totalPages}
+                Página {currentPage} de {totalPages}
             </span>
             <button
                 disabled={currentPage <= 1}

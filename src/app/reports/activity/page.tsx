@@ -9,19 +9,19 @@ export default async function ActivityPage() {
     return (
         <div>
             <ReportHeader
-                title="Member Activity"
-                description="Analysis of member engagement and return reliability."
+                title="Actividad de Socios"
+                description="Análisis de compromiso y confiabilidad de devolución."
             />
 
-            <div className="rounded-md border border-slate-200 bg-white overflow-hidden shadow-sm">
+            <div className="rounded border border-slate-200 bg-white overflow-hidden">
                 <table className="w-full text-sm text-left">
                     <thead className="bg-slate-50 text-slate-500 font-medium border-b border-slate-200">
                         <tr>
-                            <th className="px-4 py-3">Member Name</th>
-                            <th className="px-4 py-3">Type</th>
-                            <th className="px-4 py-3 text-right">Total Loans</th>
-                            <th className="px-4 py-3 text-right">Active Overdue</th>
-                            <th className="px-4 py-3 w-1/4">Reliability (On-Time Return)</th>
+                            <th className="px-4 py-3">Nombre Socio</th>
+                            <th className="px-4 py-3">Tipo</th>
+                            <th className="px-4 py-3 text-right">Total Préstamos</th>
+                            <th className="px-4 py-3 text-right">Vencidos Activos</th>
+                            <th className="px-4 py-3 w-1/4">Confiabilidad (Devolución a Tiempo)</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100">
