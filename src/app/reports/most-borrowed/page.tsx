@@ -1,6 +1,6 @@
 import { getMostBorrowedBooks } from "@/app/actions";
 import { BookOpen, TrendingUp, Users, Calendar } from 'lucide-react';
-import Pagination from "@/app/components/Pagination";
+import Pagination from "@/components/Pagination";
 
 export const dynamic = 'force-dynamic';
 

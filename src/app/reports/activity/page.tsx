@@ -1,6 +1,6 @@
 import { getMemberActivity } from "@/app/actions";
 import { Users, TrendingUp, BookOpen, Calendar, Award } from 'lucide-react';
-import Pagination from "@/app/components/Pagination";
+import Pagination from "@/components/Pagination";
 
 export const dynamic = 'force-dynamic';
 
