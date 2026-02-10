@@ -100,11 +100,11 @@ export async function getOverdueLoans(page = 1, minDays = 0) {
 }
 
 interface FineRow {
-    member_id: number;
-    member_name: string;
-    member_email: string;
-    total_pending: string;
+    month_str: string;
+    total_fines_count: string;
+    total_amount_generated: string;
     total_paid: string;
+    total_pending: string;
 }
 
 export async function getFinesSummary(page = 1) {
@@ -140,10 +140,10 @@ export async function getFinesSummary(page = 1) {
 interface MemberRow {
     member_id: number;
     name: string;
-    email: string;
+    member_type: string;
     total_loans: string;
-    active_loans: string;
-    completed_loans: string;
+    active_overdue_count: string;
+    on_time_return_rate: string;
 }
 
 export async function getMemberActivity(page = 1) {
