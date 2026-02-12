@@ -177,6 +177,7 @@ export async function getMemberActivity(page = 1) {
 }
 
 interface InventoryRow {
+    count_loaned(count_loaned: any): unknown;
     category: string;
     total_copies: string;
     count_available: string;

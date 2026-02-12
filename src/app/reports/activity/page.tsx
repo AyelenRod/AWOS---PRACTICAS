@@ -1,5 +1,4 @@
 import { getMemberActivity } from "@/app/actions";
-import { Users, BookOpen, Calendar, Award } from 'lucide-react';
 import Pagination from "@/components/Pagination";
 import Link from "next/link";
 
@@ -14,99 +13,114 @@ export default async function ActivityPage({ searchParams }: PageProps) {
   const result = await getMemberActivity(currentPage);
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6">
       <Link href="/" className="inline-flex items-center gap-2 text-sm text-[#2E5AA7] hover:underline font-medium">
         ← Volver al Dashboard
       </Link>
 
-      <div className="rounded-2xl p-6 bg-gradient-to-br from-[#86C5FF] to-[#5BA8F5] text-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-        <div className="relative z-10">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="p-3 bg-white/15 backdrop-blur-sm rounded-xl">
-              <Users className="w-7 h-7 text-white" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold">Actividad de Socios</h1>
-              <p className="text-white/80 text-sm">Estadísticas de participación y uso del sistema</p>
-            </div>
+      {/* Header*/}
+      <div className="rounded-2xl p-6 bg-[#86C5FF] text-white">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-2xl font-bold">Actividad de Socios</h1>
+            <p className="text-white/90 text-sm mt-1">Estadísticas de participación y uso del sistema</p>
           </div>
-          <div className="mt-5 grid grid-cols-3 gap-4">
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-              <span className="text-xs text-white/60 uppercase tracking-wide">Vista SQL</span>
-              <p className="text-base font-semibold mt-1">vw_member_activity</p>
+          
+          <div className="flex gap-3">
+            <div className="bg-white/20 rounded-xl p-3 border border-white/10">
+              <span className="text-[10px] text-white/70 uppercase block font-bold">Total Socios</span>
+              <p className="text-xl font-bold">{result.totalRecords}</p>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-              <span className="text-xs text-white/60 uppercase tracking-wide">Total Socios</span>
-              <p className="text-lg font-semibold mt-1">{result.totalRecords}</p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-              <span className="text-xs text-white/60 uppercase tracking-wide">Página</span>
-              <p className="text-lg font-semibold mt-1">{currentPage} de {result.totalPages}</p>
+            <div className="bg-white/20 rounded-xl p-3 border border-white/10">
+              <span className="text-[10px] text-white/70 uppercase block font-bold">Página</span>
+              <p className="text-xl font-bold">{currentPage} de {result.totalPages}</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100">
+      {/* Tabla de Resultados */}
+      <div className="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm">
         <div className="p-5 border-b border-slate-100">
-          <h2 className="text-lg font-semibold text-slate-800">Tabla de Resultados</h2>
-          <p className="text-sm text-slate-500">Ordenados por total de préstamos</p>
+          <h2 className="text-lg font-bold text-slate-800">Tabla de Resultados</h2>
+          <p className="text-xs text-slate-500">Ordenados por total de préstamos</p>
         </div>
+        
         <div className="overflow-x-auto">
-          <table className="w-full">
+          <table className="w-full border-collapse">
             <thead>
-              <tr className="bg-slate-50 border-b border-slate-100">
-                <th className="px-5 py-4 text-left text-xs font-semibold text-slate-600 uppercase">#</th>
-                <th className="px-5 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Nombre</th>
-                <th className="px-5 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Tipo</th>
-                <th className="px-5 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Total</th>
-                <th className="px-5 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Vencidos</th>
-                <th className="px-5 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Tasa Puntual</th>
-                <th className="px-5 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Nivel</th>
+              <tr className="bg-slate-50">
+                <th className="px-5 py-4 text-left text-[10px] font-bold text-slate-400 uppercase tracking-wider">#</th>
+                <th className="px-5 py-4 text-left text-[10px] font-bold text-slate-400 uppercase tracking-wider">Nombre</th>
+                <th className="px-5 py-4 text-left text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tipo</th>
+                <th className="px-5 py-4 text-left text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total</th>
+                <th className="px-5 py-4 text-left text-[10px] font-bold text-slate-400 uppercase tracking-wider">Vencidos</th>
+                <th className="px-5 py-4 text-left text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tasa Puntual</th>
+                <th className="px-5 py-4 text-left text-[10px] font-bold text-slate-400 uppercase tracking-wider">Nivel</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-50">
+            <tbody className="divide-y divide-slate-100">
               {result.data.map((m, i) => {
                 const rank = (currentPage - 1) * 10 + i + 1;
                 const total = Number(m.total_loans);
                 const overdue = Number(m.active_overdue_count);
                 const rate = Number(m.on_time_return_rate);
-                let rankBg = 'bg-slate-400';
-                if (rank === 1) rankBg = 'bg-[#FFA62B]';
-                else if (rank <= 3) rankBg = 'bg-[#86C5FF]';
-                let level = 'Lector', lvlBg = 'bg-slate-400';
-                if (total >= 30) { level = 'Avanzado'; lvlBg = 'bg-[#2E5AA7]'; }
-                else if (total >= 15) { level = 'Frecuente'; lvlBg = 'bg-[#FFA62B]'; }
-                else if (total >= 5) { level = 'Activo'; lvlBg = 'bg-emerald-500'; }
+                
+                let rankColor = 'bg-slate-100 text-slate-500';
+                if (rank === 1) rankColor = 'bg-[#FFA62B] text-white';
+                else if (rank <= 3) rankColor = 'bg-[#86C5FF] text-white';
+
+                let level = 'Lector', lvlBg = 'bg-slate-100 text-slate-500';
+                if (total >= 30) { level = 'Avanzado'; lvlBg = 'bg-[#2E5AA7] text-white'; }
+                else if (total >= 15) { level = 'Frecuente'; lvlBg = 'bg-[#FFA62B] text-white'; }
+                else if (total >= 5) { level = 'Activo'; lvlBg = 'bg-emerald-500 text-white'; }
+
                 return (
-                  <tr key={m.member_id} className="table-row-hover transition-colors">
-                    <td className="px-5 py-4"><div className={`inline-flex items-center justify-center w-9 h-9 rounded-lg ${rankBg} text-white text-sm font-bold`}>{rank}</div></td>
-                    <td className="px-5 py-4 font-medium text-slate-800 text-sm">{m.name}</td>
-                    <td className="px-5 py-4"><span className="px-2 py-1 rounded-full text-[10px] font-semibold bg-[#E3F2FD] text-[#2E5AA7]">{m.member_type}</span></td>
-                    <td className="px-5 py-4"><span className="text-lg font-bold text-[#2E5AA7]">{total}</span></td>
-                    <td className="px-5 py-4"><span className={`px-3 py-1.5 rounded-lg text-xs font-bold ${overdue > 0 ? 'bg-[#EF4444] text-white' : 'bg-slate-100 text-slate-500'}`}>{overdue}</span></td>
-                    <td className="px-5 py-4"><span className={`text-sm font-semibold ${rate >= 80 ? 'text-emerald-600' : rate >= 50 ? 'text-[#FFA62B]' : 'text-[#EF4444]'}`}>{rate.toFixed(1)}%</span></td>
-                    <td className="px-5 py-4"><span className={`px-3 py-1 rounded-full text-[10px] font-bold ${lvlBg} text-white`}>{level}</span></td>
+                  <tr key={m.member_id}>
+                    <td className="px-5 py-4">
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold ${rankColor}`}>
+                        {rank}
+                      </div>
+                    </td>
+                    <td className="px-5 py-4 text-sm font-semibold text-slate-700">{m.name}</td>
+                    <td className="px-5 py-4">
+                      <span className="px-2 py-1 rounded text-[10px] font-bold bg-slate-100 text-slate-600">
+                        {m.member_type}
+                      </span>
+                    </td>
+                    <td className="px-5 py-4">
+                      <span className="text-base font-bold text-[#2E5AA7]">{total}</span>
+                    </td>
+                    <td className="px-5 py-4">
+                      <span className={`px-2 py-1 rounded text-[10px] font-bold ${overdue > 0 ? 'bg-red-100 text-red-600' : 'text-slate-400'}`}>
+                        {overdue}
+                      </span>
+                    </td>
+                    <td className="px-5 py-4 font-mono text-sm">
+                      {rate.toFixed(1)}%
+                    </td>
+                    <td className="px-5 py-4">
+                      <span className={`px-3 py-1 rounded-full text-[9px] font-bold uppercase ${lvlBg}`}>
+                        {level}
+                      </span>
+                    </td>
                   </tr>
                 );
               })}
             </tbody>
           </table>
         </div>
-        <div className="p-5 border-t border-slate-100 bg-slate-50/50">
+        
+        <div className="p-5 border-t border-slate-100 bg-slate-50">
           <Pagination currentPage={currentPage} totalPages={result.totalPages} />
         </div>
       </div>
 
-      <div className="bg-[#EFF8FF] rounded-xl p-4 border border-[#86C5FF]/30">
-        <div className="flex items-start gap-3">
-          <div className="p-2 bg-[#86C5FF] rounded-lg"><Users className="w-4 h-4 text-white" /></div>
-          <div>
-            <h3 className="font-semibold text-slate-800 text-sm mb-1">Sobre este Reporte</h3>
-            <p className="text-xs text-slate-600">Consulta la vista <code className="px-1.5 py-0.5 bg-white rounded font-mono text-xs text-[#2E5AA7] border">vw_member_activity</code> que agrupa préstamos por socio.</p>
-          </div>
-        </div>
+      {/* Pie de Pagina */}
+      <div className="p-4 rounded-xl border border-slate-200 bg-white">
+        <p className="text-xs text-slate-400 font-medium">
+          Fuente de datos: <code className="text-[#2E5AA7] font-bold">vw_member_activity</code>
+        </p>
       </div>
     </div>
   );
