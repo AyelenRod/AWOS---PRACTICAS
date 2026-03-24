@@ -1,0 +1,10 @@
+0000000000000000000000000000000000000000 2a29df1ab0fc41dad1d7285282f3290b12b8ef97 AyelenRod <243681@ids.upchiapas.edu.mx> 1770336367 -0600	commit (initial): Avances del martes
+2a29df1ab0fc41dad1d7285282f3290b12b8ef97 2a29df1ab0fc41dad1d7285282f3290b12b8ef97 AyelenRod <243681@ids.upchiapas.edu.mx> 1770336384 -0600	checkout: moving from master to evaluacion-c1-nextjs-bda
+2a29df1ab0fc41dad1d7285282f3290b12b8ef97 3750e13113f0da63f9d5fe5f831cc044236a6e53 AyelenRod <243681@ids.upchiapas.edu.mx> 1770338106 -0600	commit: scripts .sql acabados
+3750e13113f0da63f9d5fe5f831cc044236a6e53 8dc7139104d2c8494abd686c18c2d805e59a4a43 AyelenRod <243681@ids.upchiapas.edu.mx> 1770341879 -0600	commit: Dashboard
+8dc7139104d2c8494abd686c18c2d805e59a4a43 510d6cce57a17b98d74688140b122b9fe81daa0c AyelenRod <243681@ids.upchiapas.edu.mx> 1770343531 -0600	commit: Verificacion de errores (hardcodeo, etc)
+510d6cce57a17b98d74688140b122b9fe81daa0c b759383b7f99e756bdceebb498ae67a3b38b0964 AyelenRod <243681@ids.upchiapas.edu.mx> 1770350473 -0600	commit: Correcion de errores
+b759383b7f99e756bdceebb498ae67a3b38b0964 0c1441b723333fab175a5adfa8cfd0b5d9479c33 AyelenRod <243681@ids.upchiapas.edu.mx> 1770354250 -0600	commit: Errores de conexion
+0c1441b723333fab175a5adfa8cfd0b5d9479c33 f26c61d34a558d921ab150e1242404273462bc5b AyelenRod <243681@ids.upchiapas.edu.mx> 1770355640 -0600	commit: Modificaciones de error en db.ts
+f26c61d34a558d921ab150e1242404273462bc5b c395c60eba63db513d2a5645925662162caadf49 AyelenRod <243681@ids.upchiapas.edu.mx> 1770367121 -0600	commit: No pude solucionar el error
+c395c60eba63db513d2a5645925662162caadf49 891cf235768cc68d9309c7ae10f2726cd9b5fb00 AyelenRod <243681@ids.upchiapas.edu.mx> 1770394263 -0600	commit: eliminar credenciales de env.example

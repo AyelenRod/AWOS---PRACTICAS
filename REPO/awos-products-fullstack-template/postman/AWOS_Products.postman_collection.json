@@ -1,0 +1,66 @@
+{
+  "info": {
+    "name": "AWOS Products (Template)",
+    "_postman_id": "awos-products-template",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET list products (200)",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{BASE_URL}}/api/products?page=1&limit=10" }
+      }
+    },
+    {
+      "name": "GET product by id (200)",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{BASE_URL}}/api/products/p1" }
+      }
+    },
+    {
+      "name": "GET product by id (404)",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{BASE_URL}}/api/products/p999" }
+      }
+    },
+    {
+      "name": "POST create product (201)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Monitor\",\n  \"price\": 2499,\n  \"inStock\": true\n}"
+        },
+        "url": { "raw": "{{BASE_URL}}/api/products" }
+      }
+    },
+    {
+      "name": "POST create product invalid (422)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"X\",\n  \"price\": 0,\n  \"inStock\": true\n}"
+        },
+        "url": { "raw": "{{BASE_URL}}/api/products" }
+      }
+    },
+    {
+      "name": "POST create product duplicate (409)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Mouse\",\n  \"price\": 999,\n  \"inStock\": true\n}"
+        },
+        "url": { "raw": "{{BASE_URL}}/api/products" }
+      }
+    }
+  ]
+}

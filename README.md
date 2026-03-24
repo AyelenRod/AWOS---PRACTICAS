@@ -1,18 +1,18 @@
 # AWOS - PRACTICAS
 
 Este repositorio contiene las prácticas de la materia Aplicaciones Web Orientadas a Servicios.
-Cada proyecto se encuentra en su propia rama para mantener un historial limpio y separado.
+Cada proyecto se encuentra en su propia **rama** para mantener un historial limpio y separado.
 
-## Proyectos Disponibles:
-- `API_DISNEY`
-- `CONSUMO DE APIS`
-- `FIRST_PROJECT_NEXT`
-- `JSON`
-- `PRACTICA-NEXT y BDA`
-- `PRACTICA_NEXT_BDA`
-- `TAREA CON NEXT`
+## Proyectos Disponibles (en sus ramas):
+- `api-disney`
+- `awos-products-fullstack`
 - `bug-tracker-mvp`
-- `awos-products-fullstack-template` (de la carpeta REPO)
+- `consumo-apis`
+- `evaluacion-practica-c1`
+- `first-project-next`
+- `practica-next-bda`
+- `practica-next-y-bda`
+- `tarea-con-next`
 
 Para cambiar a un proyecto específico, usa:
 `git checkout <nombre_de_la_rama>`

@@ -1,0 +1,10 @@
+0000000000000000000000000000000000000000 2730febf1700093925b52d2fb181290e0167f609 AyelenRod <243681@ids.upchiapas.edu.mx> 1772730706 -0600	commit (initial): Initial commit from Create Next App
+2730febf1700093925b52d2fb181290e0167f609 36e2dc848695d6e4dfb8a4f50dae10b3697d74a0 AyelenRod <243681@ids.upchiapas.edu.mx> 1772734225 -0600	commit: Inicio de Frontend
+36e2dc848695d6e4dfb8a4f50dae10b3697d74a0 36e2dc848695d6e4dfb8a4f50dae10b3697d74a0 AyelenRod <243681@ids.upchiapas.edu.mx> 1772734246 -0600	Branch: renamed refs/heads/master to refs/heads/main
+36e2dc848695d6e4dfb8a4f50dae10b3697d74a0 201f14ee387ea8b1aa91bfff2a1e3d9d678394a4 AyelenRod <243681@ids.upchiapas.edu.mx> 1772736919 -0600	commit: Frontend terminado o eso parece
+201f14ee387ea8b1aa91bfff2a1e3d9d678394a4 320edd29693a4be53ef63cfbedf33e37c8b24f15 AyelenRod <243681@ids.upchiapas.edu.mx> 1772737353 -0600	commit: Estilos globales
+320edd29693a4be53ef63cfbedf33e37c8b24f15 e6180bd89e3a45e127edc12ee7506abf492b421b AyelenRod <243681@ids.upchiapas.edu.mx> 1772746590 -0600	commit: Frontend acabado
+e6180bd89e3a45e127edc12ee7506abf492b421b 47524f348d167e4b5f69429c1ecc6abd8e7da558 AyelenRod <243681@ids.upchiapas.edu.mx> 1772748372 -0600	commit: Update frontend Dockerfile port
+47524f348d167e4b5f69429c1ecc6abd8e7da558 e6180bd89e3a45e127edc12ee7506abf492b421b AyelenRod <243681@ids.upchiapas.edu.mx> 1772748649 -0600	reset: moving to HEAD~1
+e6180bd89e3a45e127edc12ee7506abf492b421b cf9de0a49447c23e3566844f34076dde3b995f09 AyelenRod <243681@ids.upchiapas.edu.mx> 1772748650 -0600	commit: Configuración de puerto en Dockerfile del frontend
+cf9de0a49447c23e3566844f34076dde3b995f09 fd5704ba22b7b2938daa22da2f0d3c60441f510b AyelenRod <243681@ids.upchiapas.edu.mx> 1772748979 -0600	commit (amend): Actualizar versión de Node a 20 y configurar puerto

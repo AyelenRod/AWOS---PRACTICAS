@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@theme {
+  --color-citrus: #FFA62B;
+  --color-sea-breeze: #86C5FF;
+  --color-amalfi: #2E5AA7;
+  --color-cream: #F8E6A0;
+}
+
+body {
+  background: linear-gradient(135deg, #E3F2FD 0%, #F1F5F9 100%);
+  color: #1E293B;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2E5AA7;
+  border-radius: 10px;
+}
+
+@utility glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-soft {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@utility table-row-hover {
+  &:hover {
+    background-color: rgba(134, 197, 255, 0.08);
+  }
+}

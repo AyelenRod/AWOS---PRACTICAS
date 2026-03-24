@@ -1,0 +1,208 @@
+{
+  "resource": "Bug",
+  "description": "Contrato de Server Actions para gestión de reportes de bugs",
+  "actions": {
+    "createBug": {
+      "description": "Crea un nuevo reporte de bug",
+      "type": "Server Action",
+      "inputs": {
+        "formData": {
+          "type": "FormData",
+          "fields": {
+            "description": {
+              "type": "string",
+              "required": true,
+              "validation": {
+                "minLength": 5,
+                "maxLength": 500,
+                "pattern": "^[\\s\\S]+$"
+              },
+              "description": "Descripción detallada del bug reportado"
+            },
+            "priority": {
+              "type": "string",
+              "required": true,
+              "validation": {
+                "enum": ["Alta", "Media", "Baja"]
+              },
+              "description": "Nivel de prioridad del bug"
+            }
+          }
+        }
+      },
+      "outputs": {
+        "success": {
+          "type": "object",
+          "properties": {
+            "success": {
+              "type": "boolean",
+              "value": true
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "ID único del bug creado"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "priority": {
+                  "type": "string",
+                  "enum": ["Alta", "Media", "Baja"]
+                },
+                "createdAt": {
+                  "type": "string",
+                  "format": "ISO 8601 date-time"
+                }
+              }
+            },
+            "message": {
+              "type": "string",
+              "example": "Bug reportado exitosamente"
+            }
+          }
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "success": {
+              "type": "boolean",
+              "value": false
+            },
+            "error": {
+              "type": "string",
+              "description": "Mensaje de error descriptivo"
+            },
+            "errors": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "field": {
+                    "type": "string",
+                    "description": "Campo que causó el error"
+                  },
+                  "message": {
+                    "type": "string",
+                    "description": "Mensaje de error específico"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "errors": [
+        {
+          "code": "VALIDATION_ERROR",
+          "description": "Error de validación en los datos enviados",
+          "example": {
+            "success": false,
+            "error": "Error de validación",
+            "errors": [
+              {
+                "field": "description",
+                "message": "La descripción debe tener al menos 5 caracteres"
+              }
+            ]
+          }
+        },
+        {
+          "code": "INVALID_PRIORITY",
+          "description": "La prioridad no es válida",
+          "example": {
+            "success": false,
+            "error": "Prioridad inválida. Debe ser Alta, Media o Baja",
+            "errors": [
+              {
+                "field": "priority",
+                "message": "Prioridad inválida"
+              }
+            ]
+          }
+        },
+        {
+          "code": "SERVER_ERROR",
+          "description": "Error interno del servidor",
+          "example": {
+            "success": false,
+            "error": "Error al guardar el bug. Inténtalo nuevamente"
+          }
+        }
+      ],
+      "revalidatePath": {
+        "path": "/",
+        "type": "page",
+        "description": "Revalidar la página principal para mostrar el nuevo bug inmediatamente"
+      }
+    },
+    "getBugs": {
+      "description": "Obtiene todos los bugs reportados, ordenados por prioridad",
+      "type": "Server Action / Server Component",
+      "inputs": {
+        "none": "Esta función no recibe parámetros"
+      },
+      "outputs": {
+        "success": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "priority": {
+                "type": "string",
+                "enum": ["Alta", "Media", "Baja"]
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "ISO 8601 date-time"
+              }
+            }
+          },
+          "sorting": "Prioridad Alta primero, luego Media, luego Baja"
+        }
+      },
+      "revalidatePath": {
+        "note": "No requiere revalidación, esta función solo lee datos"
+      }
+    }
+  },
+  "persistence": {
+    "strategy": "JSON File",
+    "location": "data/bugs.json",
+    "justification": "Para un MVP interno con pocos usuarios, un archivo JSON es suficiente. No requiere configuración de base de datos y permite persistencia simple.",
+    "structure": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": "string (UUID o timestamp)",
+          "description": "string",
+          "priority": "Alta | Media | Baja",
+          "createdAt": "string (ISO 8601)"
+        }
+      }
+    }
+  },
+  "businessRules": {
+    "priorityOrder": {
+      "description": "Los bugs de prioridad Alta se muestran primero en la lista",
+      "order": ["Alta", "Media", "Baja"]
+    },
+    "visualHighlight": {
+      "description": "Los bugs de prioridad Alta deben resaltarse visualmente",
+      "implementation": "CSS classes específicas para prioridad alta"
+    },
+    "noAuthentication": {
+      "description": "No se requiere login ni autenticación",
+      "justification": "Es una herramienta interna para el equipo de desarrollo"
+    }
+  }
+}
