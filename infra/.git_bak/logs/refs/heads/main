@@ -1,0 +1,4 @@
+0000000000000000000000000000000000000000 af31da7930fa0a6d5666f9c55f0338c03ebb34fb AyelenRod <243681@ids.upchiapas.edu.mx> 1772746669 -0600	commit (initial): Infraestrutura
+af31da7930fa0a6d5666f9c55f0338c03ebb34fb aefdc55401a95aec3f58a718e608420b9b21a33e AyelenRod <243681@ids.upchiapas.edu.mx> 1772748380 -0600	commit: Update docker-compose ports to 3030 and 4040 to avoid collisions
+aefdc55401a95aec3f58a718e608420b9b21a33e af31da7930fa0a6d5666f9c55f0338c03ebb34fb AyelenRod <243681@ids.upchiapas.edu.mx> 1772748655 -0600	reset: moving to HEAD~1
+af31da7930fa0a6d5666f9c55f0338c03ebb34fb 460bee4fed05e79105ac0415fbbb8e37bb4dfa45 AyelenRod <243681@ids.upchiapas.edu.mx> 1772748655 -0600	commit: Configuración de puertos en docker-compose para evitar colisiones
