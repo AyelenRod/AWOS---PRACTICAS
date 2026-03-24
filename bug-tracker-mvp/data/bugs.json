@@ -1,0 +1,26 @@
+[
+  {
+    "id": "c7f763d1-e75d-415e-81a9-7bdcb08582e1",
+    "description": "Node no nodea",
+    "priority": "Baja",
+    "createdAt": "2026-01-27T18:33:25.368Z"
+  },
+  {
+    "id": "af6d04d2-cfef-4e8f-bc7e-6e0bf485dd49",
+    "description": "El parse no parsea",
+    "priority": "Alta",
+    "createdAt": "2026-01-27T18:33:50.130Z"
+  },
+  {
+    "id": "e69a88ef-a7b2-4deb-9a55-1a6d349413c9",
+    "description": "Prueba prueba",
+    "priority": "Media",
+    "createdAt": "2026-01-27T18:42:22.514Z"
+  },
+  {
+    "id": "abd40bea-86ba-4877-a534-8ba858d60b40",
+    "description": "hay bugs dentro del bug",
+    "priority": "Media",
+    "createdAt": "2026-01-27T21:19:42.574Z"
+  }
+]
