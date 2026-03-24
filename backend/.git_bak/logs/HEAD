@@ -1,8 +1,0 @@
-0000000000000000000000000000000000000000 7bb08012f570c0eef65b780779c20591d1b04128 AyelenRod <243681@ids.upchiapas.edu.mx> 1772738622 -0600	commit (initial): Primer commits
-7bb08012f570c0eef65b780779c20591d1b04128 e8f8524cb249ce8b96b2f022f7f6c052709ea905 AyelenRod <243681@ids.upchiapas.edu.mx> 1772740794 -0600	commit: Backendsito
-e8f8524cb249ce8b96b2f022f7f6c052709ea905 b4981748654215e624ab11687ffbbfc12cb83959 AyelenRod <243681@ids.upchiapas.edu.mx> 1772746612 -0600	commit: Back terminado
-b4981748654215e624ab11687ffbbfc12cb83959 4ae19ca7732062ae93dc28c797a7de03c62cd3f8 AyelenRod <243681@ids.upchiapas.edu.mx> 1772747737 -0600	commit: Removed dotenv logs
-4ae19ca7732062ae93dc28c797a7de03c62cd3f8 60af0e1f000db1f6d2a1e765809b5231e31a5323 AyelenRod <243681@ids.upchiapas.edu.mx> 1772747775 -0600	commit: Downgrade dotenv to prevent emoji logs
-60af0e1f000db1f6d2a1e765809b5231e31a5323 b4981748654215e624ab11687ffbbfc12cb83959 AyelenRod <243681@ids.upchiapas.edu.mx> 1772748659 -0600	reset: moving to HEAD~2
-b4981748654215e624ab11687ffbbfc12cb83959 ff25c56c054ea40b4cc0e06f0285a295410f476f AyelenRod <243681@ids.upchiapas.edu.mx> 1772748660 -0600	commit: Ajustes a dotenv para arreglar logs y cambio de puerto a 4005
-ff25c56c054ea40b4cc0e06f0285a295410f476f f5819e34f959e2a904b21516319521429530c771 AyelenRod <243681@ids.upchiapas.edu.mx> 1772748984 -0600	commit (amend): Ajustes a dotenv, cambio de puerto a 4005 y Node a v20
